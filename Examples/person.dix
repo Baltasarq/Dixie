@@ -1,0 +1,20 @@
+# Person
+
+os = defreq( "std": "os" )
+
+Person = defent(name: str, email: str) {
+    self.name = name
+    self.email = email
+
+    self.str = deffn(): str {
+        return self.name + ": " + self.email
+    }
+}
+
+
+
+entry_point = deffn() {
+    p1 = Person( "Baltasar", "baltasarq@gmail.com" )              # p1.parent == Person
+
+    os.write( p1.str() )
+}

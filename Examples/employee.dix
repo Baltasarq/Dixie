@@ -1,0 +1,23 @@
+# Employee
+
+os = defreq( "std": "os" )
+
+person = defreq( "usr": "person" )
+
+Employee = defent(firm: str, name: str, email: str) {
+    self = person.Person(name, str)
+    self.firm = firm
+
+    self.Person_str = self.str
+    self.str = def-fn(): str {
+        return self.Person_str() + " (" + firm + ")"
+    }
+}
+
+entry_point = deffn() {
+    p1 = person.Person( "Baltasar", "baltasarq@gmail.com" )         # p1.parent == person.Person
+    p2 = Employee( "UVigo", "Baltasar, "baltasarq@gmail.com" )      # p2.parent == Employee
+
+    os.write( p1.str() )
+    os.write( p2.str() )
+}

@@ -1,0 +1,76 @@
+# Dict demo
+
+os = defreq( "std": "os" )
+
+person = defreq( "usr": "person" )
+
+Agenda = defent() {
+    self.contacts = []
+
+    self.add = def-fn(c: person.Person) {
+        self.contacts[c.name] = c
+    }
+
+    self.str = deffn(): Str {
+        toret = ""
+
+        for(c: contacts) {
+            toret += c.str() + '\n'
+        }
+
+        return toret
+    }
+    
+    self.look_up = deffn(name: Str): person.Person {
+        toret = None
+        
+        if ( name in self.contacts ) {
+            toret = self.contacts[ name.trim() ]
+        }
+        
+        return toret
+        # return self.contacts[ name.trim() ]                    # Same result as above
+    }
+}
+
+menu = deffn(): Int {
+    opc = None
+    
+    while( opc == None ) {
+        os.write( "\n1. Inserta\n2. Busca\n3. Lista\n0. Salir\n\nSelecciona: " )
+        opc = Int( os.read() )
+    }
+
+    return opc
+}
+
+entry_point = deffn() {
+    agenda = Agenda()
+    
+    opc = menu()
+    while ( opc != 0 ) {
+        switch( opc ) {
+            case 1:
+                os.write( "Name?\n" )
+                name = os.read()
+                os.write( "E.mail?\n" )
+                email = os.read()
+                agenda.add( oodemo.Person( name, email ) )
+            case 2:
+                os.write( "Name?\n" )
+                name = os.read()
+                c = agenda.look_up( name )
+                
+                msg = "Not found.\n"
+                if ( c != None ) {
+                    msg = c.str()
+                }
+                
+                os.write( msg + '\n' )
+            case 3:
+                os.write( agenda.str() + '\n' )
+        }         
+            
+        opc = menu()
+    }
+}

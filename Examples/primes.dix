@@ -1,0 +1,69 @@
+# Primes
+
+os = import( "std": "os" )
+math = import( "std": "math" )
+
+Primes = defent() {
+    # This is the multi-programming method, each prime computation
+    # is stored to be used on the next invoke to is_prime(i)
+
+    self.primes = [ 2, 3, 5, 7, 11 ]
+
+    self.calculate_is_prime = deffn(x: Int): Bool {
+        toret = ( x == 2 )
+
+        if ( !toret
+          && ( toret % 2 ) != 0 )
+        {
+            for( i: range( 3, math.sqrt( x ) ) ) {
+                if ( ( x % i ) == 0 ) {
+                    break
+                }
+            } else {
+                toret = true
+            }
+        }
+
+        return toret
+    }
+
+    self.is_prime = deffn(x: Int): Bool {
+        toret = true
+
+        if ( x not in self.primes.values() ) {
+            toret = false
+
+            last_one = self.primes[ -1 ]
+            if ( x > last_one ) {
+                for( i: range( last_one + 1, x + 1 ) ) {
+                    if ( calculate_is_prime( i ) ) {
+                        self.primes += [ i ]
+                    }
+                }
+                
+                toret = ( x in self.primes.values() )
+            }
+        }
+
+        return toret
+    }
+}
+
+
+entry_point = deffn() {
+    primes = Primes()
+    
+    os.write( "\nNumber? " )
+    x = Int( os.read() )
+    
+    while( x >= 2 ) {
+        if ( primes.is_prime( x ) ) {
+            os.write( "Is prime.\n" )
+        } else {
+            os.write( "Not a prime.\n" )
+        }
+    
+        os.write( "\nNumber? " )
+        x = Int( os.read() )
+    }
+}
